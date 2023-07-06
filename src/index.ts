@@ -1,11 +1,11 @@
 import { Browser, BrowserContext, LaunchOptions, Page, chromium } from 'playwright';
 
 class ThreadsAPI {
-    proxy: LaunchOptions["proxy"] | undefined;
-    headless: boolean | undefined;
-    browser: Browser | undefined;
-    context: BrowserContext | undefined;
-    page: Page | undefined;
+    private proxy: LaunchOptions["proxy"] | undefined;
+    private headless: boolean | undefined;
+    private browser: Browser | undefined;
+    private context: BrowserContext | undefined;
+    private page: Page | undefined;
 
     constructor({
         proxy,
