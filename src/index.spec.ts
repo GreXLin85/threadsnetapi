@@ -45,7 +45,7 @@ describe('ThreadsAPI', () => {
             repliesCount: expect.any(Number),
             likesCount: expect.any(Number),
         });
-    }, 10000);
+    }, 30000);
 
     test('getUser', async () => {
         const user = await threadsAPI.getUser("grexlin85");
@@ -59,7 +59,7 @@ describe('ThreadsAPI', () => {
             followersCount: expect.any(Number),
             instagramAccount: expect.any(String),
         });
-    }, 10000);
+    }, 30000);
 
     afterAll(async () => {
         await threadsAPI.close();
