@@ -14,7 +14,9 @@ npm install threadsnetapi
 const threads = require('threadsnetapi');
 
 (async () => {
-    const threadsAPI = new ThreadsAPI({});
+    const threadsAPI = new ThreadsAPI({
+        headless: true, // Default value is false
+    });
 
     await threadsAPI.init();
 
