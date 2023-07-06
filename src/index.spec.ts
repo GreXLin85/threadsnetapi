@@ -47,6 +47,20 @@ describe('ThreadsAPI', () => {
         });
     }, 10000);
 
+    test('getUser', async () => {
+        const user = await threadsAPI.getUser("grexlin85");
+
+        expect(user).toMatchObject({
+            id: expect.any(String),
+            name: expect.any(String),
+            username: expect.any(String),
+            bio: expect.any(String),
+            profilePicture: expect.any(String),
+            followersCount: expect.any(Number),
+            instagramAccount: expect.any(String),
+        });
+    }, 10000);
+
     afterAll(async () => {
         await threadsAPI.close();
     });
