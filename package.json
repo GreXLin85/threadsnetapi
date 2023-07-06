@@ -11,6 +11,7 @@
     "threadsnet api"
   ],
   "main": "dist/index.js",
+  "typings": "src/index.d.ts",
   "repository": "https://github.com/GreXLin85/threadsnetapi",
   "author": "GreXLin85",
   "license": "MIT",
