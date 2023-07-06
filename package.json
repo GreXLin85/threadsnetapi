@@ -28,6 +28,6 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "publish": "tsc && npm publish"
+    "prepublishOnly": "tsc"
   }
 }
