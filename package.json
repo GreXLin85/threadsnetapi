@@ -1,0 +1,17 @@
+{
+  "name": "threadsnetapi",
+  "version": "1.0.0",
+  "description": "Threads.net API",
+  "keywords": [
+    "threads",
+    "api",
+    "threads.net",
+    "threadsnet",
+    "threads.net api",
+    "threadsnet api"
+  ],
+  "main": "dist/index.js",
+  "repository": "https://github.com/GreXLin85/threadsnetapi",
+  "author": "GreXLin85",
+  "license": "MIT"
+}
