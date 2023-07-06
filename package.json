@@ -26,6 +26,8 @@
     "typescript": "^5.1.6"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "publish": "tsc && npm publish"
   }
 }
