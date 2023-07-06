@@ -1,21 +1,25 @@
-import { Browser, BrowserContext, Page, chromium } from 'playwright';
+import { Browser, BrowserContext, LaunchOptions, Page, chromium } from 'playwright';
 
 class ThreadsAPI {
-    proxy: string | undefined;
+    proxy: LaunchOptions["proxy"] | undefined;
+    headless: boolean | undefined;
     browser: Browser | undefined;
     context: BrowserContext | undefined;
     page: Page | undefined;
 
     constructor({
-        proxy
+        proxy,
+        headless = false
     }: {
-        proxy?: string
+        proxy?: LaunchOptions["proxy"];
+        headless?: boolean;
     }) {
         this.proxy = proxy;
+        this.headless = headless;
     }
 
     async init() {
-        this.browser = await chromium.launch({ headless: false });
+        this.browser = await chromium.launch({ headless: this.headless, proxy: this.proxy });
         this.context = await this.browser.newContext();
         this.page = await this.context.newPage();
     }
