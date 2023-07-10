@@ -130,15 +130,6 @@ class ThreadsAPI {
                 this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div[5]/div/div[2]/span/span`).getAttribute("title"),
             ]);
 
-            log({
-                id: (await this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div[5]/div/span[1]/a`).getAttribute("href"))?.replace("https://www.threads.net/t/", ""),
-                content,
-                user: "@" + userId,
-                whenShared: new Date(whenShared as string),
-                repliesCount: Number(repliesCount?.replace(" replies", "")),
-                likesCount: Number(likesCount)
-            })
-
             threadsArray.push({
                 id: (await this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div/div[1]/div/div[1]/a`).getAttribute("href"))?.replace("https://www.threads.net/t/", ""),
                 content,
