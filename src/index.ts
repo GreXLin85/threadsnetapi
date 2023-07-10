@@ -67,7 +67,7 @@ class ThreadsAPI {
             content,
             user: "@" + user,
             whenShared: new Date(whenShared as unknown as string),
-            repliesCount: repliesCount?.split(" ")[0],
+            repliesCount: Number(repliesCount?.split(" ")[0]),
             likesCount: Number(likesCount?.split(" ")[0])
         }
     }
