@@ -29,6 +29,5 @@ declare module 'threadsnetapi' {
             followersCount: Number;
             instagramAccount: String;
         }>;
-        getUserThreads(userId?: String): Promise<Thread[]>;
     }
 }
