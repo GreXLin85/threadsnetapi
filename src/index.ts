@@ -33,6 +33,7 @@ class ThreadsAPI {
     async close() {
         this.checkIfInitialized();
 
+        await this.page?.close();
         await this.context?.close();
         await this.browser?.close();
     }
@@ -54,21 +55,20 @@ class ThreadsAPI {
             repliesCount,
             likesCount
         ] = await Promise.all([
-            this.page?.locator("xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[1]/div/div/div[3]/div/div[1]/p/span").innerText(),
+            this.page?.locator("xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[1]/div/div/div[3]/div/div[1]").innerText(),
             this.page?.locator("xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[1]/div/div/div[2]/div/div[1]/span/a/span").innerText(),
             this.page?.locator("xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[1]/div/div/div[2]/div/div[2]/span/a/time").getAttribute("datetime"),
             this.page?.locator("xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[1]/div/div/div[4]/div/span[1]/a").innerText(),
-            this.page?.locator("xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[1]/div/div/div[4]/div/div/span/span").getAttribute("title"),
-
+            this.page?.locator("xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[1]/div/div/div[4]/div/div/span").innerText(),
         ]);
 
         return {
             id: threadId,
             content,
             user: "@" + user,
-            whenShared: new Date(whenShared as string),
-            repliesCount: Number(repliesCount?.replace(" replies", "")),
-            likesCount: Number(likesCount)
+            whenShared: new Date(whenShared as unknown as string),
+            repliesCount: repliesCount?.split(" ")[0],
+            likesCount: Number(likesCount?.split(" ")[0])
         }
     }
     getReplies(threadId: string = "CuP48CiS5sx") {
@@ -108,6 +108,9 @@ class ThreadsAPI {
     async getUserThreads(userId: string = "zuck") {
         this.checkIfInitialized();
 
+        throw new Error("Method will be implemented in the future.");
+        return;
+
         await this.page?.goto(`https://www.threads.net/@${userId}`);
 
         const threads = await this.page?.locator("xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div").count() as number;
@@ -121,11 +124,20 @@ class ThreadsAPI {
                 repliesCount,
                 likesCount
             ] = await Promise.all([
-                this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div/div[3]/div/div[1]/p/span`).innerText(),
-                this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div/div[2]/div/div[2]/span/a/time`).getAttribute("datetime"),
-                this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div/div[4]/div/span[1]/a`).innerText(),
-                this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div/div[4]/div/div/span/span`).getAttribute("title"),
+                this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div[4]/div/div[1]`).innerText(),
+                this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div[2]/div/div[2]/span/a/time`).getAttribute("datetime"),
+                this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div[5]/div/span[1]/a`).innerText(),
+                this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div[5]/div/div[2]/span/span`).getAttribute("title"),
             ]);
+
+            log({
+                id: (await this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div[5]/div/span[1]/a`).getAttribute("href"))?.replace("https://www.threads.net/t/", ""),
+                content,
+                user: "@" + userId,
+                whenShared: new Date(whenShared as string),
+                repliesCount: Number(repliesCount?.replace(" replies", "")),
+                likesCount: Number(likesCount)
+            })
 
             threadsArray.push({
                 id: (await this.page?.locator(`xpath=//html/body/div[2]/div/div/div[2]/div/div/div/div/div[1]/div[2]/div[${i}]/div/div/div[1]/div/div[1]/a`).getAttribute("href"))?.replace("https://www.threads.net/t/", ""),
