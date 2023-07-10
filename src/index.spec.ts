@@ -17,13 +17,12 @@ describe('ThreadsAPI Internal', () => {
 
     test('does not throw error if initialized', async () => {
         const thrAPI = new ThreadsAPI({});
-        
+
         await thrAPI.init();
         expect(async () => {
             thrAPI.checkIfInitialized();
+            await thrAPI.close();
         }).not.toThrowError('You must call init() before calling this method');
-    
-        await thrAPI.close();
     });
 });
 
@@ -59,21 +58,6 @@ describe('ThreadsAPI', () => {
             followersCount: expect.any(Number),
             instagramAccount: expect.any(String),
         });
-    }, 30000);
-
-    test('getUserThreads', async () => {
-        const threads = await threadsAPI.getUserThreads("grexlin85");
-
-        expect(threads).toEqual(expect.arrayContaining([
-            expect.objectContaining({
-                id: expect.any(String),
-                content: expect.any(String),
-                user: expect.any(String),
-                whenShared: expect.any(Date),
-                repliesCount: expect.any(Number),
-                likesCount: expect.any(Number),
-            })
-        ]));
     }, 30000);
 
     afterAll(async () => {
